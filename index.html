@@ -7,9 +7,9 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);overflow:hid
 canvas{display:block;width:100%;height:100%}
 #hud{position:fixed;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 0;display:flex;gap:14px;align-items:center;font-weight:700;text-shadow:0 1px 3px #000;pointer-events:none}
 #bar{width:140px;height:14px;background:#0008;border:2px solid #fff;border-radius:8px;overflow:hidden}#hp{height:100%;width:100%;background:#e33}
-#scr{position:fixed;inset:0;background:radial-gradient(#2a3a1f,#0b0f08) center/cover;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px;z-index:5}
+#scr{position:fixed;inset:0;background:radial-gradient(#6a2fa0,#240b3f) center/cover;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px;z-index:5}
 #scr h1{margin:0;font-size:clamp(26px,6vw,52px);color:var(--ac);text-shadow:0 3px 0 #000}
-#scr p{margin:0;max-width:520px;opacity:.9;line-height:1.4}
+#scr p{margin:0;max-width:640px;opacity:.9;line-height:1.4}
 button{font:700 18px system-ui;padding:12px 22px;border-radius:12px;border:0;background:var(--ac);color:#000}
 button:disabled{opacity:.5}
 #tc{position:fixed;inset:0;display:none;pointer-events:none}
@@ -18,9 +18,9 @@ button:disabled{opacity:.5}
 #sw{right:calc(env(safe-area-inset-right,0px) + 134px);bottom:calc(env(safe-area-inset-bottom,0px) + 40px);width:60px;height:60px}
 </style></head><body>
 <canvas id="c"></canvas>
-<div id="hud"><div id="bar"><div id="hp"></div></div><span id="wt"></span><span id="zl"></span></div>
+<div id="hud"><div id="bar"><div id="hp"></div></div></div>
 <div id="tc"><div class="b" id="fire">ОГОНЬ</div><div class="b" id="sw">⇄</div></div>
-<div id="scr"><h1 id="ttl">МЕЛЛСТРОЙ vs ЗОМБИ</h1><p id="msg">Мытищи. Дабалаборатория сломалась, и зомби вылезли на улицы. Найди оружие, чекушки, сливы и бананы, зачисти город.</p>
+<div id="scr"><h1 id="ttl">МЕЛЛСТРОЙ vs ЗОМБИ</h1><p id="msg">В родном городе Меллстроя, пока он был в запое в зомби дабалатории под магазином Чекушки произошла утечка. Все жители кроме Мелла стали зомби и захватили город. Наш герой в страхе за свой любимый магазин пошел освобождать город от наглых зомбей.</p>
 <button id="go" disabled>Загрузка…</button><button id="cont" style="display:none">Продолжить</button>
 <p id="hint"></p></div>
 <script>
@@ -38,8 +38,6 @@ async function load(){
  for(const k of['apple','banana','sliva','chekushka'])IT[k]=await img('items/'+k+'.webp');
  for(const n of[16,17])TL.push(await img('tiles/t'+n+'.webp','tiles/t'+n+'.png'));
  SHOP=await img('tiles/shop.webp','tiles/shop.png');
- const bg=await img('tiles/start.webp','tiles/start.png');
- if(bg)$('scr').style.background='linear-gradient(#000a,#000a),url('+bg.src+') center/cover';
 }
 async function aud(k){const u=U('sfx/'+M[k].audio);let b;
  if(u.startsWith('data:')){const s=atob(u.split(',')[1]);b=new Uint8Array(s.length);for(let i=0;i<s.length;i++)b[i]=s.charCodeAt(i);b=b.buffer}
@@ -94,17 +92,14 @@ function aim(){let a=P.f>0?0:Math.PI;
  if(!tch&&mx){a=Math.atan2((my-H/2)/Z+70,(mx-W/2)/Z)}
  else{let b=600;for(const z of ZS)if(!z.dead){const d=Math.hypot(z.x-P.x,z.y-P.y);if(d<b){b=d;a=Math.atan2(z.y-P.y-30,z.x-P.x)}}}
  return a}
-function fire(){if(P.cd>0||over)return;const w=P.cur,a=aim();P.f=Math.cos(a)>=0?1:-1;
- if(!w){P.cd=.45;if(!rx||rx.t>=rx.dur){rx={k:'fight',t:0,dur:M.fight.duration,pr:0};snd('fight',true)}
-  let b=null,bd=110;for(const z of ZS)if(!z.dead){const d=Math.hypot(z.x-P.x-P.f*50,z.y-P.y);if(d<bd){bd=d;b=z}}
-  if(b)hit(b,P.boost>0?2:1,a);return}
- if(w!=='pistol'&&P.ammo[w]<=0){P.cur=nextW();return}
+function fire(){if(P.cd>0||over||!P.cur)return;const w=P.cur,a=aim();P.f=Math.cos(a)>=0?1:-1;
  const ox=P.x+P.f*80,oy=P.y-60,k=P.boost>0?2:1;snd(w);P.wt=0;
- if(w==='pistol'){P.cd=.32;B(ox,oy,a,900,.8,1*k)}
- else if(w==='shotgun'){P.cd=.9;P.ammo[w]--;for(let i=0;i<6;i++)B(ox,oy,a+(i-2.5)*.07,850,.4,1*k)}
- else{P.cd=1.6;P.ammo[w]--;B(ox,oy,a,560,1.4,5*k,1)}}
+ if(w==='pistol'){P.cd=.32;B(ox,oy,a,1500,.48,1*k)}
+ else if(w==='shotgun'){P.cd=.9;for(let i=0;i<6;i++)B(ox,oy,a+(i-2.5)*.07,1400,.24,1*k)}
+ else{P.cd=1.6;B(ox,oy,a,900,.87,5*k,1)}}
+
 function B(x,y,a,s,l,d,r){BU.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l,d,r})}
-function nextW(){const o=WO.filter(w=>P.own[w]&&(w==='pistol'||P.ammo[w]>0));const i=o.indexOf(P.cur);return o.length?o[(i+1)%o.length]:null}
+function nextW(){const o=WO.filter(w=>P.own[w]);const i=o.indexOf(P.cur);return o.length?o[(i+1)%o.length]:null}
 function mv(z,dx,dy){if(!blocked(z.x+dx,z.y))z.x+=dx;if(!blocked(z.x,z.y+dy))z.y+=dy}
 function hit(z,d,a){if(z.dead)return;z.hp-=d;mv(z,Math.cos(a)*16,Math.sin(a)*16);
  if(z.hp<=0){z.dead=1;z.da=0;P.kills++;if(Math.random()<.14)DR.push({id:'d'+did++,k:rnd(['apple','banana','sliva','apple','banana','sliva','chekushka']),x:z.x,y:z.y})}}
@@ -131,7 +126,7 @@ function upd(dt){
   if(d<460){mv(z,dx/d*(z.sp+22)*dt,dy/d*(z.sp+22)*dt);z.f=dx>0?1:-1;near++}
   else{z.tt-=dt;if(z.tt<=0){z.tx=z.hx+(Math.random()-.5)*400;z.ty=z.hy+(Math.random()-.5)*400;z.tt=2+Math.random()*3}
    const ex=z.tx-z.x,ey=z.ty-z.y,e=Math.hypot(ex,ey);if(e>8){mv(z,ex/e*28*dt,ey/e*28*dt);z.f=ex>0?1:-1}}
-  if(d<55)hurtP(10*dt)}
+  if(d<55)hurtP(25*dt)}
  if(P.hp<35&&near>=3&&cdF<=0&&(!rx||rx.t>=rx.dur)){react('fear',2);cdF=14}
  for(let i=BU.length-1;i>=0;i--){const b=BU[i];b.x+=b.vx*dt;b.y+=b.vy*dt;b.l-=dt;let rm=b.l<=0||blocked(b.x,b.y+70);
   if(!rm)for(const z of ZS)if(!z.dead&&Math.hypot(z.x-b.x,z.y-(b.y+80))<50){
@@ -142,8 +137,6 @@ function upd(dt){
  else if(!over&&lvl===0&&!clr1&&ZS.every(z=>z.dead)){clr1=true;banner('Зона зачищена! Выход слева ◀',6)}
  else if(!over&&lvl===1&&ZS.every(z=>z.dead)){over=true;try{localStorage.removeItem('mell1')}catch(e){}scr('ПОБЕДА!','Все зомби повержены, Мытищи зачищены. Мелл, ты легенда.','Играть ещё')}
  $('hp').style.width=Math.max(0,P.hp)+'%';
- $('wt').textContent=(P.cur?WN[P.cur]+' '+(P.cur==='pistol'?'∞':P.ammo[P.cur]):'Кулаки')+(P.boost>0?' 🍾':'');
- $('zl').textContent='Ур.'+(lvl+1)+' · Зомби: '+ZS.filter(z=>!z.dead).length;
  const g=LV[lvl].gate;if(g&&!over&&P.x>g[0]&&P.x<g[0]+g[2]&&P.y>g[1]&&P.y<g[1]+g[3])goNext()}
 function fr(k,tm,x,y,s,fl,tilt,loop=true,al=1){const m=M[k];let i=Math.floor(tm*m.fps);i=loop?i%m.frames:Math.min(i,m.frames-1);
  const sh=m.im[Math.floor(i/m.per)],j=i%m.per,w=m.frameW,h=m.frameH;if(!sh)return;
@@ -211,7 +204,7 @@ async function begin(sv){
 $('go').onclick=()=>begin(null);
 $('cont').onclick=()=>{try{begin(JSON.parse(localStorage.getItem('mell1')))}catch(e){begin(null)}};
 if(/iPhone|iPad|iPod/.test(navigator.userAgent)&&!navigator.standalone)$('hint').textContent='iPhone: «Поделиться» → «На экран Домой», чтобы играть на весь экран.';
-else $('hint').textContent=touch?'Левая половина экрана: движение. Справа: ОГОНЬ и смена оружия.':'WASD: ходьба · Мышь или Пробел: огонь / удар · Q: сменить оружие · B: показать стены';
+else $('hint').textContent=touch?'Левая половина экрана: движение. Справа: ОГОНЬ и смена оружия.':'WASD: ходьба · Мышь или Пробел: огонь · Q: сменить оружие · B: показать стены';
 let last=0;function loop(ts){requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||0);last=ts;if(started){upd(dt)}if(P)draw()}
 (async()=>{newGame(null);await load();$('go').disabled=false;$('go').textContent='Играть';
  try{if(localStorage.getItem('mell1'))$('cont').style.display=''}catch(e){}
