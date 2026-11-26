@@ -1,0 +1,210 @@
+{
+ "first_zombie": {
+  "name": "first_zombie",
+  "fps": 20,
+  "frameW": 309,
+  "frameH": 220,
+  "cols": 6,
+  "frames": 107,
+  "duration": 5.35,
+  "sheets": [
+   {
+    "file": "first_zombie_0.webp",
+    "frames": 54
+   },
+   {
+    "file": "first_zombie_1.webp",
+    "frames": 53
+   }
+  ],
+  "audio": "first_zombie.mp3"
+ },
+ "angry1": {
+  "name": "angry1",
+  "fps": 20,
+  "frameW": 166,
+  "frameH": 220,
+  "cols": 12,
+  "frames": 120,
+  "duration": 6.0,
+  "sheets": [
+   {
+    "file": "angry1_0.webp",
+    "frames": 108
+   },
+   {
+    "file": "angry1_1.webp",
+    "frames": 12
+   }
+  ],
+  "audio": "angry1.mp3"
+ },
+ "angry2": {
+  "name": "angry2",
+  "fps": 20,
+  "frameW": 290,
+  "frameH": 220,
+  "cols": 7,
+  "frames": 71,
+  "duration": 3.55,
+  "sheets": [
+   {
+    "file": "angry2_0.webp",
+    "frames": 63
+   },
+   {
+    "file": "angry2_1.webp",
+    "frames": 8
+   }
+  ],
+  "audio": "angry2.mp3"
+ },
+ "eat1": {
+  "name": "eat1",
+  "fps": 20,
+  "frameW": 291,
+  "frameH": 220,
+  "cols": 7,
+  "frames": 120,
+  "duration": 6.0,
+  "sheets": [
+   {
+    "file": "eat1_0.webp",
+    "frames": 63
+   },
+   {
+    "file": "eat1_1.webp",
+    "frames": 57
+   }
+  ],
+  "audio": "eat1.mp3"
+ },
+ "eat2": {
+  "name": "eat2",
+  "fps": 20,
+  "frameW": 355,
+  "frameH": 220,
+  "cols": 5,
+  "frames": 113,
+  "duration": 5.65,
+  "sheets": [
+   {
+    "file": "eat2_0.webp",
+    "frames": 45
+   },
+   {
+    "file": "eat2_1.webp",
+    "frames": 45
+   },
+   {
+    "file": "eat2_2.webp",
+    "frames": 23
+   }
+  ],
+  "audio": "eat2.mp3"
+ },
+ "pistol": {
+  "name": "pistol",
+  "fps": 24,
+  "frameW": 171,
+  "frameH": 70,
+  "cols": 11,
+  "frames": 19,
+  "duration": 0.79,
+  "sheets": [
+   {
+    "file": "pistol.webp",
+    "frames": 19
+   }
+  ],
+  "audio": "pistol.mp3"
+ },
+ "shotgun": {
+  "name": "shotgun",
+  "fps": 24,
+  "frameW": 175,
+  "frameH": 70,
+  "cols": 11,
+  "frames": 31,
+  "duration": 1.29,
+  "sheets": [
+   {
+    "file": "shotgun.webp",
+    "frames": 31
+   }
+  ],
+  "audio": "shotgun.mp3"
+ },
+ "rpg": {
+  "name": "rpg",
+  "fps": 24,
+  "frameW": 197,
+  "frameH": 70,
+  "cols": 10,
+  "frames": 81,
+  "duration": 3.38,
+  "sheets": [
+   {
+    "file": "rpg.webp",
+    "frames": 81
+   }
+  ],
+  "audio": "rpg.mp3"
+ },
+ "zombie": {
+  "name": "zombie",
+  "fps": 12,
+  "frameW": 380,
+  "frameH": 200,
+  "cols": 5,
+  "frames": 72,
+  "duration": 6.0,
+  "sheets": [
+   {
+    "file": "zombie_0.webp",
+    "frames": 50
+   },
+   {
+    "file": "zombie_1.webp",
+    "frames": 22
+   }
+  ],
+  "audio": "zombie.mp3"
+ },
+ "fear": {
+  "name": "fear",
+  "fps": 20,
+  "frameW": 265,
+  "frameH": 220,
+  "cols": 7,
+  "frames": 120,
+  "duration": 6.0,
+  "sheets": [
+   {
+    "file": "fear_0.webp",
+    "frames": 63
+   },
+   {
+    "file": "fear_1.webp",
+    "frames": 57
+   }
+  ],
+  "audio": "fear.mp3"
+ },
+ "fight": {
+  "name": "fight",
+  "fps": 20,
+  "frameW": 192,
+  "frameH": 220,
+  "cols": 10,
+  "frames": 9,
+  "duration": 0.45,
+  "sheets": [
+   {
+    "file": "fight.webp",
+    "frames": 9
+   }
+  ],
+  "audio": "fight.mp3"
+ }
+}
